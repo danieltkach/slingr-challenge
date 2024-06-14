@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { EmptyListPanel } from './EmptyListPanel';
 
 const theme = createTheme({
   palette: {
@@ -15,8 +16,15 @@ const theme = createTheme({
   },
   typography: {
     h6: {
-      fontSize: '1.125rem', 
+      fontSize: '1.125rem',
     },
+    h2: {
+      fontFamily: 'Nunito',
+      fontSize: '1.125rem',
+      weight: 400,
+      lineHeight: '1.5rem',
+      color: '#87898C',
+    }
   },
 });
 
@@ -24,9 +32,9 @@ export const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <CssBaseline />
-          <NavBar>
+          <NavBar position="static">
             <Toolbar>
               <Typography
                 variant="h6"
@@ -36,6 +44,7 @@ export const App: React.FC = () => {
               </Typography>
             </Toolbar>
           </NavBar>
+          <EmptyListPanel />
         </Box>
       </StyledThemeProvider>
     </ThemeProvider>
