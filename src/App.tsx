@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { EmptyListPanel } from './EmptyListPanel';
+import { EmptyListPanel } from './components/EmptyListPanel';
 
 const theme = createTheme({
   palette: {

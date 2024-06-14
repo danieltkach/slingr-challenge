@@ -9,7 +9,7 @@ type Props = {
 
 export const Card: React.FC<Props> = ({ children }) => {
   return (
-    <StyledCard>
+    <StyledCard sx={{ boxShadow: 'none' }}>
       <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
         {children}
       </CardContent>
@@ -21,7 +21,6 @@ const StyledCard = styled(MUICard)`
   width: 38.375rem;
   height: 18.125rem;
   padding: 4.5rem;
-  box-shadow: none !important;
   border: 1px solid #C6C6C6;
   border-radius: 5px;
 `;

@@ -1,8 +1,11 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Card } from './ui/Card';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
+
+const title = "Your shopping list is empty :(";
+const buttonText = "Add your first item";
 
 export const EmptyListPanel: React.FC = () => {
   return (
@@ -16,12 +19,10 @@ export const EmptyListPanel: React.FC = () => {
     >
       <Card>
         <Typography variant="h2">
-          Your shopping list is empty :(
+          {title}
         </Typography>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          <Button variant="contained" color="primary">
-            Add your first item
-          </Button>
+          <Button text={buttonText} />
         </Box>
       </Card>
     </Box>
