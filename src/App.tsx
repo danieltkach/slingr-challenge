@@ -5,12 +5,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#4D81B7'
+    },
+  },
+  typography: {
+    h6: {
+      fontSize: '1.125rem', 
     },
   },
 });
@@ -21,19 +26,22 @@ export const App: React.FC = () => {
       <StyledThemeProvider theme={theme}>
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
-          <AppBar component="nav">
+          <NavBar>
             <Toolbar>
               <Typography
                 variant="h6"
-                component="div"
                 sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
               >
                 SHOPPING LIST
               </Typography>
             </Toolbar>
-          </AppBar>
+          </NavBar>
         </Box>
       </StyledThemeProvider>
     </ThemeProvider>
   );
 };
+
+const NavBar = styled(AppBar)`
+  height: 4rem;
+`;
