@@ -6,19 +6,27 @@ import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { routeUrls } from '../../config/routes';
+import { useListItemStore } from '../../state/listItemStore';
 
 type Props = {
   items: ListItem[];
 };
 
 export const ShoppingList: React.FC<Props> = ({ items }) => {
+  const { resetListItem } = useListItemStore();
+
   const navigateTo = useNavigate();
+
+  function onAddItemClick() {
+    resetListItem();
+    navigateTo(routeUrls.editItem);
+  }
 
   return (
     <Container id="shopping-list">
       <ActionsPanel>
         <Typography variant="h2">Your Items</Typography>
-        <Button variant={"contained"} text={"Add Item"} onClick={() => navigateTo(routeUrls.addItem)} />
+        <Button variant={"contained"} text={"Add Item"} onClick={onAddItemClick} />
       </ActionsPanel>
       <ItemsContainer>
         {

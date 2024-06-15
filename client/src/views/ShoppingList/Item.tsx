@@ -4,13 +4,24 @@ import { ListItem } from "../../types";
 import { Checkbox, Typography } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useNavigate } from 'react-router-dom';
+import { useListItemStore } from '../../state/listItemStore';
+import { routeUrls } from '../../config/routes';
 
-type Props = { 
+type Props = {
   item: ListItem;
-}
+};
 
-export const Item: React.FC<Props> = ({item}) => {
-  const {id, name, description, active} = item;
+export const Item: React.FC<Props> = ({ item }) => {
+  const { name, description, active } = item;
+  const { setListItem } = useListItemStore();
+
+  const navigateTo = useNavigate();
+
+  function onEditClick() {
+    setListItem(item);
+    navigateTo(routeUrls.editItem);
+  }
 
   return (
     <Card>
@@ -20,8 +31,8 @@ export const Item: React.FC<Props> = ({item}) => {
         <Typography variant="h4">{description}</Typography>
       </Text>
       <Icons>
-        <ModeEditOutlineOutlinedIcon onClick={()=>console.log(id)} />
-        <DeleteOutlineOutlinedIcon onClick={()=>console.log(id)} />
+        <ModeEditOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => onEditClick()} />
+        <DeleteOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => { }} />
       </Icons>
     </Card>
   );

@@ -1,54 +1,55 @@
 const Item = require('../models/Item');
 
 const handleNewItem = async (req, res, next) => {
-	try {
-		const { name, description, quantity, active } = req.body;
+  try {
+    const { name, description, quantity, active } = req.body;
 
-		const newItem = await Item.create({ name, description, quantity, active });
-		const { _id, quantity: defaultQuantity } = newItem;
-		return res.json({ _id, name, description, quantity: quantity ? quantity : defaultQuantity , active });
-	} catch (e) {
-		console.error(e.message);
-		return res.status(500).json('Item could not be created.');
-	}
+    const newItem = await Item.create({ name: name.toString(), description: description.toString(), quantity: quantity.toString(), active: !!active });
+    const { _id, quantity: defaultQuantity } = newItem;
+    return res.json({ id: _id, name, description, quantity: quantity ? quantity : defaultQuantity, active });
+  } catch (e) {
+    console.error(e.message);
+    return res.status(500).json('Item could not be created.');
+  }
 };
 
 const handleGetAll = async (req, res, next) => {
-	try {
-		let items = await Item.find();
-		return res.json(items);
-	} catch (e) {
-		console.error(e.message);
-		return res.sendStatus(500);
-	}
+  try {
+    let items = await Item.find();
+    const mappedItems = items.map(i => ({ id: i._id, name: i.name, description: i.description, quantity: i.quantity, active: i.active }));
+    return res.json(mappedItems);
+  } catch (e) {
+    console.error(e.message);
+    return res.sendStatus(500);
+  }
 };
 
 const handleDetails = async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const item = await Item.findOne({ _id: id });
-    if (!item) return res.status(404).json({message: 'Item not found.'});
+  try {
+    const { id } = req.params;
+    const item = await Item.findOne({ _id: id });
+    if (!item) return res.status(404).json({ message: 'Item not found.' });
 
-		return res.json(item);
-	} catch (error) {
-		console.error(error.message);
-		return res.status(404).json('Data not found.');
-	}
+    return res.json(item);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(404).json('Data not found.');
+  }
 };
 
 const handleToggle = async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		let item = await Item.findOne({ _id: id });
-    if (!item) return res.status(404).json({message: 'Item not found.'});
+  try {
+    const { id } = req.params;
+    let item = await Item.findOne({ _id: id });
+    if (!item) return res.status(404).json({ message: 'Item not found.' });
 
-		item.active = item.active ? false : true;
-		await item.save();
-		return res.json(item);
-	} catch (e) {
-		console.error(e.message);
-		return res.status(400).json('Item status could not be updated.');
-	}
+    item.active = item.active ? false : true;
+    await item.save();
+    return res.json(item);
+  } catch (e) {
+    console.error(e.message);
+    return res.status(400).json('Item status could not be updated.');
+  }
 };
 
 const handleDelete = async (req, res, next) => {

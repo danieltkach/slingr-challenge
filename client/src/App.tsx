@@ -5,14 +5,13 @@ import { ShoppingList } from './views/ShoppingList';
 import { useQuery } from '@tanstack/react-query';
 import { shoppingListQueryKey } from './state/queryKeys';
 import { API_URL } from './config/env';
+import axios from 'axios';
 
 export const App: React.FC = () => {
   const { isPending, error, data } = useQuery({
     queryKey: [shoppingListQueryKey],
     queryFn: () =>
-      fetch(`${API_URL}/items/get-all`).then((res) =>
-        res.json(),
-      ),
+      axios.get(`${API_URL}/items/get-all`).then((res) => res.data),
   });
 
   if (isPending) return 'Loading...';

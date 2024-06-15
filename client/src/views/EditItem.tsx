@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextField, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
 import TextArea from '../ui/TextArea';
 import { Select } from '../ui/Select';
 import { Card as MUICard } from '@mui/material';
@@ -15,15 +15,17 @@ import axios from 'axios';
 import { API_URL } from '../config/env';
 import { routeUrls } from '../config/routes';
 
-export const EditItem: React.FC<{id?: string}> = ({id}) => {
+export const EditItem = () => {
   const { listItem, setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
+  const isEditing = !!listItem?.id;
 
   const mutation = useMutation({
     mutationFn: (newItem: ListItem) =>
       axios.post(`${API_URL}/items/new`, newItem).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
+      resetListItem();
       navigateTo(routeUrls.home);
     },
     onError: () => {
@@ -44,16 +46,12 @@ export const EditItem: React.FC<{id?: string}> = ({id}) => {
     });
   };
 
-  useEffect(() => {
-    () => resetListItem();
-  }, []);
-
   return (
     <Container>
       <StyledCard>
         <Content>
-          <Typography variant="h2" >Add an Item</Typography>
-          <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>Add your new item below</Typography>
+          <Typography variant="h2" >{isEditing ? 'Edit an Item' : 'Add an Item'}</Typography>
+          <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>{isEditing ? 'Edit your item below' : 'Add your new item below'}</Typography>
 
           <TextField
             label="Item Name"
@@ -72,6 +70,12 @@ export const EditItem: React.FC<{id?: string}> = ({id}) => {
             value={listItem.quantity}
             onChange={(value) => handleChange("quantity", value)}
           />
+          {listItem?.id &&
+            <FormControlLabel control={
+              <Checkbox checked={!listItem.active} onChange={(event) => handleChange("active", event.target.value)} />
+            }
+              label="Purchased" />
+          }
         </Content>
         <Actions>
           <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />

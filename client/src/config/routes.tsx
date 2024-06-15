@@ -6,8 +6,7 @@ import { EditItem } from "../views/EditItem.tsx";
 
 export const routeUrls = {
   home: '/',
-  addItem: "/add-item",
-  editItem: (id: string) => `/edit-item/${id}`
+  editItem: "/edit-item",
 };
 
 export const router = createBrowserRouter([
@@ -21,11 +20,7 @@ export const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: routeUrls.addItem,
-        element: <EditItem />,
-      },
-      {
-        path: routeUrls.editItem(":id"),
+        path: routeUrls.editItem,
         element: <EditItem />,
       },
     ],
