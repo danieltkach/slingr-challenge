@@ -4,9 +4,13 @@ import { Select } from '../ui/Select';
 import { Card as MUICard } from '@mui/material';
 import styled from 'styled-components';
 import { Button } from '../ui/Button';
+import { routeUrls } from '../routes';
+import { useNavigate } from 'react-router-dom';
 
 
 export const AddItem = () => {
+  const navigateTo = useNavigate();
+
   return (
     <Container>
       <StyledCard>
@@ -18,7 +22,7 @@ export const AddItem = () => {
           <Select sx={{ marginBottom: '1.125rem' }} />
         </Content>
         <Actions>
-          <Button text={'Cancel'} />
+          <Button text={'Cancel'} onClick={()=>navigateTo(routeUrls.home)} />
           <Button text={'Add Task'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} />
         </Actions>
       </StyledCard>

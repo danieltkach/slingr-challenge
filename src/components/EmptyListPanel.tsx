@@ -22,7 +22,7 @@ export const EmptyListPanel: React.FC = () => {
           {title}
         </Typography>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          <Button text={buttonText} />
+          <Button text={buttonText} variant={"contained"} />
         </Box>
       </Card>
     </Box>

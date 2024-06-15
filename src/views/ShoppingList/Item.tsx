@@ -32,7 +32,7 @@ const Card = styled.div`
   align-items: center;
   border: 0.5px solid #D5DFE9;
   width: 64rem;
-  height: 5.4rem;
+  min-height: 5.4rem;
   border-radius: 4px;
 `;
 
