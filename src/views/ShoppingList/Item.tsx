@@ -14,14 +14,14 @@ export const Item: React.FC<Props> = ({item}) => {
 
   return (
     <Card>
-      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} />
+      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={status === "done" ? true : false} />
       <Text>
         <Typography variant="h3">{title}</Typography>
         <Typography variant="h4">{description}</Typography>
       </Text>
       <Icons>
-        <ModeEditOutlineOutlinedIcon />
-        <DeleteOutlineOutlinedIcon />
+        <ModeEditOutlineOutlinedIcon onClick={()=>console.log(id)} />
+        <DeleteOutlineOutlinedIcon onClick={()=>console.log(id)} />
       </Icons>
     </Card>
   );
