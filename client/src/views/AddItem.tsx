@@ -6,10 +6,51 @@ import styled from 'styled-components';
 import { Button } from '../ui/Button';
 import { routeUrls } from '../routes';
 import { useNavigate } from 'react-router-dom';
-
+import { useListItemStore } from '../state/listItemStore';
+import { ListItem } from '../types';
+import { API_URL } from '../config';
+import { shoppingListQueryKey } from '../state/queryKeys';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../main';
 
 export const AddItem = () => {
+  const { listItem, setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (newItem: ListItem) =>
+      fetch(`${API_URL}/items/new`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItem),
+      }).then((res) => res.json()),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
+    },
+  });
+
+  function onAddClick() {
+    console.log(listItem)
+    mutation.mutate(listItem);
+  }
+
+  const handleChange = (
+    field: keyof ListItem,
+    value: string | number | boolean
+  ) => {
+    setListItem({
+      [field]: value,
+    });
+  };
+
+  const handleTextFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: keyof ListItem
+  ) => {
+    handleChange(field, event.target.value);
+  };
 
   return (
     <Container>
@@ -17,13 +58,28 @@ export const AddItem = () => {
         <Content>
           <Typography variant="h2" >Add an Item</Typography>
           <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>Add your new item below</Typography>
-          <TextField id="item-name" label="Item Name" variant="outlined" sx={{ marginBottom: '1.125rem' }} />
-          <TextArea sx={{ marginBottom: '1.125rem' }} />
-          <Select sx={{ marginBottom: '1.125rem' }} />
+
+          <TextField
+            label="Item Name"
+            variant="outlined"
+            sx={{ marginBottom: '1.125rem' }}
+            value={listItem.name}
+            onChange={(event) => handleTextFieldChange(event, 'name')}
+          />
+          <TextArea
+            sx={{ marginBottom: '1.125rem' }}
+            value={listItem.description}
+            onChange={(value) => handleChange("description", value)}
+          />
+          <Select
+            sx={{ marginBottom: '1.125rem' }}
+            value={listItem.quantity}
+            onChange={(value) => handleChange("quantity", value)}
+          />
         </Content>
         <Actions>
-          <Button text={'Cancel'} onClick={()=>navigateTo(routeUrls.home)} />
-          <Button text={'Add Task'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} />
+          <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />
+          <Button text={'Add Task'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onAddClick()} />
         </Actions>
       </StyledCard>
     </Container>

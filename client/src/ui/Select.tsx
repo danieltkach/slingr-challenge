@@ -8,13 +8,13 @@ import { SxProps } from '@mui/system';
 
 type Props = {
   sx?: SxProps;
+  value: number;
+  onChange: (value: number) => void;
 }
 
-export const Select: React.FC<Props> = ({sx}) => {
-  const [value, setValue] = React.useState<number>(10);
-
+export const Select: React.FC<Props> = ({sx, value, onChange}) => {
   const handleChange = (event: SelectChangeEvent<number>) => {
-    setValue(Number(event.target.value));
+    onChange(Number(event.target.value));
   };
 
   return (

@@ -2,11 +2,11 @@ const Item = require('../models/Item');
 
 const handleNewItem = async (req, res, next) => {
 	try {
-		const { title, description, quantity, active } = req.body;
+		const { name, description, quantity, active } = req.body;
 
-		const newItem = await Item.create({ title, description, quantity, active });
+		const newItem = await Item.create({ name, description, quantity, active });
 		const { _id, quantity: defaultQuantity } = newItem;
-		return res.json({ _id, title, description, quantity: quantity ? quantity : defaultQuantity , active });
+		return res.json({ _id, name, description, quantity: quantity ? quantity : defaultQuantity , active });
 	} catch (e) {
 		console.error(e.message);
 		return res.status(500).json('Item could not be created.');

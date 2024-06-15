@@ -4,7 +4,7 @@ import { EmptyListPanel } from './components/EmptyListPanel';
 import { ShoppingList } from './views/ShoppingList';
 import { useQuery } from '@tanstack/react-query';
 import { API_URL } from './config';
-import { shoppingListQueryKey } from './state/queryKey';
+import { shoppingListQueryKey } from './state/queryKeys';
 
 export const App: React.FC = () => {
   const { isPending, error, data } = useQuery({

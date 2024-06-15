@@ -1,6 +1,6 @@
 export type ListItem = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   quantity: number;
   active: boolean;

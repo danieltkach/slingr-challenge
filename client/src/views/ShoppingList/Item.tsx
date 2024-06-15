@@ -10,13 +10,13 @@ type Props = {
 }
 
 export const Item: React.FC<Props> = ({item}) => {
-  const {id, title, description, active} = item;
+  const {id, name, description, active} = item;
 
   return (
     <Card>
       <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!active} />
       <Text>
-        <Typography variant="h3">{title}</Typography>
+        <Typography variant="h3">{name}</Typography>
         <Typography variant="h4">{description}</Typography>
       </Text>
       <Icons>

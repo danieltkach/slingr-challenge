@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
@@ -6,13 +6,13 @@ import { SxProps } from '@mui/system';
 
 type Props = {
   sx?: SxProps;
-}
+  value: string;
+  onChange: (value: string) => void;
+};
 
-const TextArea: React.FC<Props> = ({sx}) => {
-  const [value, setValue] = useState<string>('');
-
+const TextArea: React.FC<Props> = ({ sx, value, onChange }) => {
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
+    onChange(event.target.value);
   };
 
   return (
