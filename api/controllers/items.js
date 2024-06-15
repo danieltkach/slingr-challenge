@@ -1,19 +1,37 @@
 const Item = require('../models/Item');
 
-const handleNewItem = async (req, res, next) => {
+const handleEditItem = async (req, res) => {
   try {
-    const { name, description, quantity, active } = req.body;
+    const { id, name, description, quantity, active } = req.body;
 
-    const newItem = await Item.create({ name: name.toString(), description: description.toString(), quantity: quantity.toString(), active: !!active });
-    const { _id, quantity: defaultQuantity } = newItem;
-    return res.json({ id: _id, name, description, quantity: quantity ? quantity : defaultQuantity, active });
+    if (id) {
+      // Update existing item
+      const existingItem = await Item.findById(id);
+      if (!existingItem) {
+        return res.status(404).json({ message: 'Item not found' });
+      }
+
+      existingItem.name = name || existingItem.name;
+      existingItem.description = description || existingItem.description;
+      existingItem.quantity = quantity !== undefined ? quantity : existingItem.quantity;
+      existingItem.active = active !== undefined ? active : existingItem.active;
+
+      await existingItem.save();
+      return res.json({ id: existingItem._id, name: existingItem.name, description: existingItem.description, quantity: existingItem.quantity, active: existingItem.active });
+    } else {
+      // Create new item
+      const newItem = await Item.create({ name: name.toString(), description: description.toString(), quantity: quantity.toString(), active: !!active });
+      const { _id, quantity: defaultQuantity } = newItem;
+      return res.json({ id: _id, name, description, quantity: quantity ? quantity : defaultQuantity, active });
+    }
   } catch (e) {
     console.error(e.message);
-    return res.status(500).json('Item could not be created.');
+    return res.status(500).json('Item could not be created or updated.');
   }
 };
 
-const handleGetAll = async (req, res, next) => {
+
+const handleGetAll = async (req, res) => {
   try {
     let items = await Item.find();
     const mappedItems = items.map(i => ({ id: i._id, name: i.name, description: i.description, quantity: i.quantity, active: i.active }));
@@ -24,7 +42,7 @@ const handleGetAll = async (req, res, next) => {
   }
 };
 
-const handleDetails = async (req, res, next) => {
+const handleDetails = async (req, res) => {
   try {
     const { id } = req.params;
     const item = await Item.findOne({ _id: id });
@@ -37,7 +55,7 @@ const handleDetails = async (req, res, next) => {
   }
 };
 
-const handleToggle = async (req, res, next) => {
+const handleToggle = async (req, res) => {
   try {
     const { id } = req.params;
     let item = await Item.findOne({ _id: id });
@@ -52,7 +70,7 @@ const handleToggle = async (req, res, next) => {
   }
 };
 
-const handleDelete = async (req, res, next) => {
+const handleDelete = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedItem = await Item.findByIdAndDelete(id);
@@ -66,4 +84,4 @@ const handleDelete = async (req, res, next) => {
   }
 };
 
-module.exports = { handleNewItem, handleGetAll, handleDetails, handleToggle, handleDelete };
+module.exports = { handleEditItem, handleGetAll, handleDetails, handleToggle, handleDelete };

@@ -43,8 +43,6 @@ export const EditItem = () => {
     setListItem({
       [field]: value,
     });
-
-    console.log(value)
   };
 
   return (
@@ -80,7 +78,7 @@ export const EditItem = () => {
         </Content>
         <Actions>
           <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />
-          <Button text={'Add Task'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onAddClick()} />
+          <Button text={isEditing ? 'Save Item' : 'Add Item'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onAddClick()} />
         </Actions>
       </StyledCard>
     </Container>
