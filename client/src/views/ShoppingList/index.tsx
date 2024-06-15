@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ListItem } from "../../types";
 import { Item } from './Item';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { routeUrls } from '../../config/routes';
 import { useListItemStore } from '../../state/listItemStore';
+import { Modal } from '../../components/Modal';
 
 type Props = {
   items: ListItem[];
@@ -14,8 +15,8 @@ type Props = {
 
 export const ShoppingList: React.FC<Props> = ({ items }) => {
   const { resetListItem } = useListItemStore();
-
   const navigateTo = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   function onAddItemClick() {
     resetListItem();
@@ -24,6 +25,7 @@ export const ShoppingList: React.FC<Props> = ({ items }) => {
 
   return (
     <Container id="shopping-list">
+      <Modal open={modalOpen} setOpen={setModalOpen} />
       <ActionsPanel>
         <Typography variant="h2">Your Items</Typography>
         <Button variant={"contained"} text={"Add Item"} onClick={onAddItemClick} />

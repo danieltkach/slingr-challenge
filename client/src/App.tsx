@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { shoppingListQueryKey } from './state/queryKeys';
 import { API_URL } from './config/env';
 import axios from 'axios';
+import { ScreenSpinner } from './components/ScreenSpinner';
 
 export const App: React.FC = () => {
   const { isPending, error, data } = useQuery({
@@ -14,13 +15,15 @@ export const App: React.FC = () => {
       axios.get(`${API_URL}/items/get-all`).then((res) => res.data),
   });
 
-  if (isPending) return 'Loading...';
   if (error) return 'An error has occurred: ' + error.message;
 
   return (
     <Container >
       {
-        data.length === 0 ? <EmptyListPanel /> : <ShoppingList items={data} />
+        isPending ?
+          <ScreenSpinner />
+          :
+          data.length === 0 ? <EmptyListPanel /> : <ShoppingList items={data} />
       }
     </Container>
   );
