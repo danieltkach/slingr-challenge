@@ -12,27 +12,22 @@ import { API_URL } from '../config';
 import { shoppingListQueryKey } from '../state/queryKeys';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../main';
+import axios from 'axios';
 
 export const AddItem = () => {
   const { listItem, setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
-
+  
   const mutation = useMutation({
     mutationFn: (newItem: ListItem) =>
-      fetch(`${API_URL}/items/new`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newItem),
-      }).then((res) => res.json()),
+      axios.post(`${API_URL}/items/new`, newItem).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
+      navigateTo(routeUrls.home);
     },
   });
-
+  
   function onAddClick() {
-    console.log(listItem)
     mutation.mutate(listItem);
   }
 
