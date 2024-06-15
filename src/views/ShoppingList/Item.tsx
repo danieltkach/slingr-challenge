@@ -1,32 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ListItem } from "../../types";
 import { Checkbox, Typography } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-export const ShoppingList: React.FC =()=> {
-  return(
-    <Container>
-      <Card>
-        <Checkbox sx={{marginLeft: '1rem', marginRight: '1rem'}} />
-        <Text>
-          <Typography variant="h3">Tomatoes</Typography>
-          <Typography variant="h4">Green cherry tomatoes</Typography>
-        </Text>
-        <Icons>
-          <ModeEditOutlineOutlinedIcon />
-          <DeleteOutlineOutlinedIcon />
-        </Icons>
-      </Card>
-    </Container>
-  )
+type Props = { 
+  item: ListItem;
 }
 
-const Container = styled.div`
-  display: flex;
-  padding: 1rem;
-  justify-content: center;
-`;
+export const Item: React.FC<Props> = ({item}) => {
+  const {id, title, description, status} = item;
+
+  return (
+    <Card>
+      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} />
+      <Text>
+        <Typography variant="h3">{title}</Typography>
+        <Typography variant="h4">{description}</Typography>
+      </Text>
+      <Icons>
+        <ModeEditOutlineOutlinedIcon />
+        <DeleteOutlineOutlinedIcon />
+      </Icons>
+    </Card>
+  );
+};
 
 const Card = styled.div`
   display: flex;
