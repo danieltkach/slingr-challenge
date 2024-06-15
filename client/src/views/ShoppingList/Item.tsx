@@ -49,12 +49,16 @@ export const Item: React.FC<Props> = ({ item }) => {
     <Card>
       <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!active} />
       <Text>
-        <Typography variant="h3">{name}</Typography>
-        <Typography variant="h4">{description}</Typography>
+        <Typography variant="h3" sx={{
+          textDecoration: active ? 'none' : 'line-through',
+        }}>{name}</Typography>
+        <Typography variant="h4" sx={{
+          textDecoration: active ? 'none' : 'line-through',
+        }}>{description}</Typography>
       </Text>
       <Icons>
-        <ModeEditOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => onEditClick()} />
-        <DeleteOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => onDeleteClick()} />
+        <ModeEditOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onEditClick()} />
+        <DeleteOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onDeleteClick()} />
       </Icons>
     </Card>
   );
