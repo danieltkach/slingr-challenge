@@ -19,12 +19,12 @@ export const Select: React.FC<Props> = ({sx}) => {
 
   return (
     <FormControl fullWidth variant="outlined" sx={sx}>
-      <InputLabel id="select-label">Options</InputLabel>
+      <InputLabel id="select-label">How Many?</InputLabel>
       <MUISelect
         labelId="select-label"
         value={value}
         onChange={handleChange}
-        label="Options"
+        label="How many?"
       >
         <MenuItem value={1}>1</MenuItem>
         <MenuItem value={2}>2</MenuItem>

@@ -11,7 +11,7 @@ export const AddItem = () => {
     <Container>
       <StyledCard>
         <Content>
-          <Typography variant="h2" sx={{ marginBottom: '1.125rem' }}>Add an Item</Typography>
+          <Typography variant="h2" >Add an Item</Typography>
           <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>Add your new item below</Typography>
           <TextField id="item-name" label="Item Name" variant="outlined" sx={{ marginBottom: '1.125rem' }} />
           <TextArea sx={{ marginBottom: '1.125rem' }} />
@@ -30,11 +30,12 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 2rem;
-`;
+  `;
 
 const StyledCard = styled(MUICard)`
   display: flex;
   padding: 1.2rem;
+  padding-top: 3rem;
   flex-direction: column;
   width: 35rem;
   height: 48rem;
