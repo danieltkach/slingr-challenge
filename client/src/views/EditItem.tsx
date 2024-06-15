@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
 import TextArea from '../ui/TextArea';
 import { Select } from '../ui/Select';
@@ -44,6 +43,8 @@ export const EditItem = () => {
     setListItem({
       [field]: value,
     });
+
+    console.log(value)
   };
 
   return (
@@ -72,7 +73,7 @@ export const EditItem = () => {
           />
           {listItem?.id &&
             <FormControlLabel control={
-              <Checkbox checked={!listItem.active} onChange={(event) => handleChange("active", event.target.value)} />
+              <Checkbox checked={!listItem.active} onChange={(event) => handleChange("active", !event.target.checked)} />
             }
               label="Purchased" />
           }
