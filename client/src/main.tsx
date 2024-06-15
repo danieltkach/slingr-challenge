@@ -10,7 +10,8 @@ import { App } from './App.tsx';
 import { ErrorPage } from './views/ErrorPage';
 import { AddItem } from './views/AddItem.tsx';
 import { EditItem } from './views/EditItem.tsx';
-import Root from './Root.tsx';
+import Layout from './Layout.tsx';
+import { routeUrls } from './routes/index.ts';
 
 const theme = createTheme({
   palette: {
@@ -49,19 +50,19 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: routeUrls.home,
         element: <App />,
       },
       {
-        path: "add-item",
+        path: routeUrls.addItem,
         element: <AddItem />,
       },
       {
-        path: "edit-item/:itemId",
+        path: routeUrls.editItem("id"),
         element: <EditItem />,
       },
     ],
