@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { EmptyListPanel } from './components/EmptyListPanel';
 import { ShoppingList } from './views/ShoppingList';
 import { useQuery } from '@tanstack/react-query';
-import { API_URL } from './config';
 import { shoppingListQueryKey } from './state/queryKeys';
+import { API_URL } from './config/env';
 
 export const App: React.FC = () => {
   const { isPending, error, data } = useQuery({

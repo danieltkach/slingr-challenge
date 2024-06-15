@@ -4,8 +4,8 @@ import { ListItem } from "../../types";
 import { Item } from './Item';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { routeUrls } from '../../routes';
 import { Typography } from '@mui/material';
+import { routeUrls } from '../../config/routes';
 
 type Props = {
   items: ListItem[];
