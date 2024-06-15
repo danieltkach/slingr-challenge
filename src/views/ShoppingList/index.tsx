@@ -19,6 +19,8 @@ export const ShoppingList: React.FC<Props> =({items})=> {
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 1rem;
   justify-content: center;
+  gap: 1rem;
 `;
