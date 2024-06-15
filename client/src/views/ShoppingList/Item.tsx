@@ -7,6 +7,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { useNavigate } from 'react-router-dom';
 import { useListItemStore } from '../../state/listItemStore';
 import { routeUrls } from '../../config/routes';
+import axios from 'axios';
+import { API_URL } from '../../config/env';
+import { shoppingListQueryKey } from '../../state/queryKeys';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../main';
 
 type Props = {
   item: ListItem;
@@ -14,13 +19,30 @@ type Props = {
 
 export const Item: React.FC<Props> = ({ item }) => {
   const { name, description, active } = item;
-  const { setListItem } = useListItemStore();
-
+  const { setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
 
   function onEditClick() {
     setListItem(item);
     navigateTo(routeUrls.editItem);
+  }
+
+  const deletingApi = useMutation({
+    mutationFn: (item: ListItem) =>
+      axios.put(`${API_URL}/items/delete/${item.id}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
+      resetListItem();
+      navigateTo(routeUrls.home);
+    },
+    onError: (e) => {
+      alert(`${e.message}`);
+      console.error(e);
+    }
+  });
+
+  function onDeleteClick() {
+    deletingApi.mutate(item);
   }
 
   return (
@@ -32,7 +54,7 @@ export const Item: React.FC<Props> = ({ item }) => {
       </Text>
       <Icons>
         <ModeEditOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => onEditClick()} />
-        <DeleteOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => { }} />
+        <DeleteOutlineOutlinedIcon sx={{cursor: 'pointer'}} onClick={() => onDeleteClick()} />
       </Icons>
     </Card>
   );

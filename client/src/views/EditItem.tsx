@@ -19,21 +19,22 @@ export const EditItem = () => {
   const navigateTo = useNavigate();
   const isEditing = !!listItem?.id;
 
-  const mutation = useMutation({
+  const editingApi = useMutation({
     mutationFn: (newItem: ListItem) =>
-      axios.post(`${API_URL}/items/new`, newItem).then((res) => res.data),
+      axios.post(`${API_URL}/items/edit`, newItem).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
       resetListItem();
       navigateTo(routeUrls.home);
     },
-    onError: () => {
-
+    onError: (e) => {
+      alert(`${e.message}`);
+      console.error(e);
     }
   });
 
-  function onAddClick() {
-    mutation.mutate(listItem);
+  function onSaveClick() {
+    editingApi.mutate(listItem);
   }
 
   const handleChange = (
@@ -78,7 +79,7 @@ export const EditItem = () => {
         </Content>
         <Actions>
           <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />
-          <Button text={isEditing ? 'Save Item' : 'Add Item'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onAddClick()} />
+          <Button text={isEditing ? 'Save Item' : 'Add Item'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onSaveClick()} />
         </Actions>
       </StyledCard>
     </Container>
