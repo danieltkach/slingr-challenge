@@ -16,7 +16,6 @@ const handleNewItem = async (req, res, next) => {
 const handleGetAll = async (req, res, next) => {
 	try {
 		let items = await Item.find();
-
 		return res.json(items);
 	} catch (e) {
 		console.error(e.message);
@@ -28,6 +27,8 @@ const handleDetails = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const item = await Item.findOne({ _id: id });
+    if (!item) return res.status(404).json({message: 'Item not found.'});
+
 		return res.json(item);
 	} catch (error) {
 		console.error(error.message);
@@ -39,6 +40,8 @@ const handleToggle = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		let item = await Item.findOne({ _id: id });
+    if (!item) return res.status(404).json({message: 'Item not found.'});
+
 		item.active = item.active ? false : true;
 		await item.save();
 		return res.json(item);
