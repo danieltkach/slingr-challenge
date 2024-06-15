@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
+import { SxProps } from '@mui/system';
 
-const TextArea: React.FC = () => {
+type Props = {
+  sx?: SxProps;
+}
+
+const TextArea: React.FC<Props> = ({sx}) => {
   const [value, setValue] = useState<string>('');
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -11,11 +16,11 @@ const TextArea: React.FC = () => {
   };
 
   return (
-    <Box position="relative" width="100%">
+    <Box position="relative" width="100%" sx={sx}>
       <StyledTextField
         label="Description"
         multiline
-        rows={4}
+        rows={5}
         variant="outlined"
         fullWidth
         value={value}

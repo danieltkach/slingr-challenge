@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { useRouteError } from 'react-router-dom';
+import { useNavigate, useRouteError } from 'react-router-dom';
 import { Button } from '../ui/Button';
 
 type RouteError = {
@@ -12,6 +12,7 @@ const errorMessage = "The page you are looking for is not available."
 
 export const ErrorPage: React.FC = () => {
   const error = useRouteError() as RouteError;
+  const navigateTo = useNavigate();
   console.error(error);
 
   return (
@@ -28,7 +29,7 @@ export const ErrorPage: React.FC = () => {
           {errorMessage}
         </Typography>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          <Button text={'Return to home page'} />
+          <Button text={'Return to home page'} onClick={()=>navigateTo('/')} />
         </Box>
     </Box>
   );
