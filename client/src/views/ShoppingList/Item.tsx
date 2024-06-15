@@ -42,6 +42,7 @@ export const Item: React.FC<Props> = ({ item }) => {
   });
 
   function onDeleteClick() {
+    // setModalOpen()
     deletingApi.mutate(item);
   }
 
