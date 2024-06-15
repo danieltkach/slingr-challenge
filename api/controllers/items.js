@@ -15,7 +15,7 @@ const handleNewItem = async (req, res, next) => {
 
 const handleGetAll = async (req, res, next) => {
 	try {
-		let items = await Collect.find();
+		let items = await Item.find();
 
 		return res.json(items);
 	} catch (e) {
@@ -27,7 +27,7 @@ const handleGetAll = async (req, res, next) => {
 const handleDetails = async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const item = await Collect.findOne({ _id: id });
+		const item = await Item.findOne({ _id: id });
 		return res.json(item);
 	} catch (error) {
 		console.error(error.message);
@@ -37,7 +37,7 @@ const handleDetails = async (req, res, next) => {
 
 const handleToggle = async (req, res, next) => {
 	try {
-		const { id } = req.body;
+		const { id } = req.params;
 		let item = await Item.findOne({ _id: id });
 		item.active = item.active ? false : true;
 		await item.save();
@@ -49,14 +49,17 @@ const handleToggle = async (req, res, next) => {
 };
 
 const handleDelete = async (req, res, next) => {
-	try {
-		const { id } = req.body;
-		
-		return res.json('Not implemented.');
-	} catch (e) {
-		console.error(e.message);
-		res.status(500).json('Could not delete the item.');
-	}
+  try {
+    const { id } = req.params;
+    const deletedItem = await Item.findByIdAndDelete(id);
+    if (!deletedItem) {
+      return res.status(404).json('Item not found.');
+    }
+    return res.json(deletedItem);
+  } catch (e) {
+    console.error(e.message);
+    return res.status(500).json('Could not delete the item.');
+  }
 };
 
 module.exports = { handleNewItem, handleGetAll, handleDetails, handleToggle, handleDelete };

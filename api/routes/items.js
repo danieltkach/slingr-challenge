@@ -4,9 +4,9 @@ const itemsController = require('../controllers/items');
 const { handleNewItem, handleGetAll, handleDetails, handleToggle, handleDelete } = itemsController;
 
 router.post('/new', handleNewItem);
-router.post('/getAll', handleGetAll);
+router.get('/get-all', handleGetAll);
 router.get('/details/:id', handleDetails);
-router.put('/toggle', handleToggle);
-router.put('/delete', handleDelete);
+router.put('/toggle/:id', handleToggle);
+router.put('/delete/:id', handleDelete);
 
 module.exports = router;
