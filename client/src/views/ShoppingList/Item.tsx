@@ -20,7 +20,7 @@ type Props = {
 
 export const Item: React.FC<Props> = ({ item }) => {
   const { name, description, active } = item;
-  const { setListItem, resetListItem } = useListItemStore();
+  const { setListItem } = useListItemStore();
   const navigateTo = useNavigate();
   const { state: modalState, setState: setModalState } = useModalStore();
 
@@ -34,8 +34,6 @@ export const Item: React.FC<Props> = ({ item }) => {
       axios.put(`${API_URL}/items/delete/${item.id}`).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
-      resetListItem();
-      navigateTo(routeUrls.home);
     },
     onError: (e) => {
       alert(`${e.message}`);
@@ -51,7 +49,7 @@ export const Item: React.FC<Props> = ({ item }) => {
     if(modalState.result === "confirm" && modalState.isOpen === false && item.id === modalState.itemId) {
       deletingApi.mutate(item);
     }
-  }, [modalState.result, item.id]);
+  }, [modalState.result, modalState.isOpen, modalState.itemId, item.id]);
   
   return (
     <Card>

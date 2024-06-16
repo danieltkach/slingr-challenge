@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
+import { Alert, Checkbox, FormControlLabel, Snackbar, TextField, Typography } from '@mui/material';
 import TextArea from '../components/TextArea';
 import { Select } from '../components/Select';
 import { Card as MUICard } from '@mui/material';
@@ -13,8 +13,10 @@ import { queryClient } from '../main';
 import axios from 'axios';
 import { API_URL } from '../config/env';
 import { routeUrls } from '../config/routes';
+import { useState } from 'react';
 
 export const EditItem = () => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { listItem, setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
   const isEditing = !!listItem?.id;
@@ -34,7 +36,11 @@ export const EditItem = () => {
   });
 
   function onSaveClick() {
-    editingApi.mutate(listItem);
+    if (listItem.name.trim().length < 1 || listItem.description.trim().length < 1) {
+      setSnackbarOpen(true);
+    } else {
+      editingApi.mutate(listItem);
+    }
   }
 
   const handleChange = (
@@ -47,42 +53,59 @@ export const EditItem = () => {
   };
 
   return (
-    <Container>
-      <StyledCard>
-        <Content>
-          <Typography variant="h2" >{isEditing ? 'Edit an Item' : 'Add an Item'}</Typography>
-          <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>{isEditing ? 'Edit your item below' : 'Add your new item below'}</Typography>
+    <>
+      {snackbarOpen && <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={() => setSnackbarOpen(false)}
+        message="">
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Name and description must be at least one character long.
+        </Alert>
+      </Snackbar>
+      }
+      <Container>
+        <StyledCard>
+          <Content>
+            <Typography variant="h2" >{isEditing ? 'Edit an Item' : 'Add an Item'}</Typography>
+            <Typography variant="h3" sx={{ marginBottom: '1.125rem' }}>{isEditing ? 'Edit your item below' : 'Add your new item below'}</Typography>
 
-          <TextField
-            label="Item Name"
-            variant="outlined"
-            sx={{ marginBottom: '1.125rem' }}
-            value={listItem.name}
-            onChange={(event) => handleChange('name', event.target.value)}
-          />
-          <TextArea
-            sx={{ marginBottom: '1.125rem' }}
-            value={listItem.description}
-            onChange={(value) => handleChange("description", value)}
-          />
-          <Select
-            sx={{ marginBottom: '1.125rem' }}
-            value={listItem.quantity}
-            onChange={(value) => handleChange("quantity", value)}
-          />
-          {listItem?.id &&
-            <FormControlLabel control={
-              <Checkbox checked={!listItem.active} onChange={(event) => handleChange("active", !event.target.checked)} />
+            <TextField
+              label="Item Name"
+              variant="outlined"
+              sx={{ marginBottom: '1.125rem' }}
+              value={listItem.name}
+              onChange={(event) => handleChange('name', event.target.value)}
+            />
+            <TextArea
+              sx={{ marginBottom: '1.125rem' }}
+              value={listItem.description}
+              onChange={(value) => handleChange("description", value)}
+            />
+            <Select
+              sx={{ marginBottom: '1.125rem' }}
+              value={listItem.quantity}
+              onChange={(value) => handleChange("quantity", value)}
+            />
+            {listItem?.id &&
+              <FormControlLabel control={
+                <Checkbox checked={!listItem.active} onChange={(event) => handleChange("active", !event.target.checked)} />
+              }
+                label="Purchased" />
             }
-              label="Purchased" />
-          }
-        </Content>
-        <Actions>
-          <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />
-          <Button text={isEditing ? 'Save Item' : 'Add Item'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onSaveClick()} />
-        </Actions>
-      </StyledCard>
-    </Container>
+          </Content>
+          <Actions>
+            <Button text={'Cancel'} onClick={() => navigateTo(routeUrls.home)} />
+            <Button text={isEditing ? 'Save Item' : 'Add Item'} variant={"contained"} sx={{ marginLeft: '1.5rem' }} onClick={() => onSaveClick()} />
+          </Actions>
+        </StyledCard>
+      </Container>
+    </>
   );
 };
 
