@@ -19,6 +19,7 @@ export const EmptyListPanel: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         flexGrow: 1,
+        marginTop: '10rem'
       }}
     >
       <Card>
