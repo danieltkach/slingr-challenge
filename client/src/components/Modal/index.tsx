@@ -4,26 +4,27 @@ import styled from 'styled-components';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button } from './Button';
+import { Button } from '../Button';
+import { ModalState } from '../Modal/modalStore';
 
 type Props = {
   open: boolean;
-  onClose: (confirmed: boolean) => void;
+  onClose: (state: ModalState) => void;
 };
 
 export const Modal: React.FC<Props> = ({ open, onClose }) => {
   function onCancelClick() {
-    onClose(false);
+    onClose({isOpen: false, result: "cancel"});
   }
 
   function onConfirmClick() {
-    onClose(true)
+    onClose({isOpen: false, result: "confirm"})
   }
 
   return (
     <Dialog
       open={open}
-      onClose={()=>onClose(false)}
+      onClose={onCancelClick}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
