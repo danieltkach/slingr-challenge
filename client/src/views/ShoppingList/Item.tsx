@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ListItem } from "../../types";
 import { Checkbox, Typography } from '@mui/material';
@@ -19,7 +19,8 @@ type Props = {
 };
 
 export const Item: React.FC<Props> = ({ item }) => {
-  const { name, description, active } = item;
+  const { name, description, active: initialActive } = item;
+  const [isActive, setIsActive] = useState(initialActive);
   const { setListItem } = useListItemStore();
   const navigateTo = useNavigate();
   const { state: modalState, setState: setModalState } = useModalStore();
@@ -40,9 +41,32 @@ export const Item: React.FC<Props> = ({ item }) => {
       console.error(e);
     }
   });
+  
+  const toggleApi = useMutation({
+    mutationFn: (item: ListItem) =>
+      axios.put(`${API_URL}/items/toggle/${item.id}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [shoppingListQueryKey] });
+    },
+    onError: (e) => {
+      alert(`${e.message}`);
+      console.error(e);
+      setIsActive(!isActive); 
+    }
+  });
+
+  useEffect(() => {
+    // Necessary for the optimistic update
+    setIsActive(initialActive);
+  }, [initialActive]);
 
   function onDeleteClick() {
     setModalState({isOpen: true, itemId: item.id});
+  }
+
+  function onToggleClick() {
+    setIsActive(!isActive); // Optimistically update the state
+    toggleApi.mutate({ ...item, active: !isActive });
   }
 
   useEffect(()=>{
@@ -53,13 +77,13 @@ export const Item: React.FC<Props> = ({ item }) => {
   
   return (
     <Card>
-      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!active} />
+      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!isActive} onClick={onToggleClick} />
       <Text>
         <Typography variant="h3" sx={{
-          textDecoration: active ? 'none' : 'line-through',
+          textDecoration: isActive ? 'none' : 'line-through',
         }}>{name}</Typography>
         <Typography variant="h4" sx={{
-          textDecoration: active ? 'none' : 'line-through',
+          textDecoration: isActive ? 'none' : 'line-through',
         }}>{description}</Typography>
       </Text>
       <Icons>
