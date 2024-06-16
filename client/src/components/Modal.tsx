@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button } from '../ui/Button';
+import { Button } from './Button';
 
 type Props = {
   open: boolean;

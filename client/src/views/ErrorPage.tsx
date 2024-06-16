@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import { Button } from '../ui/Button';
+import { Button } from '../components/Button';
 
 type RouteError = {
   statusText?: string;

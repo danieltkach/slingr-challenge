@@ -2,7 +2,7 @@ import React  from 'react';
 import styled from 'styled-components';
 import { ListItem } from "../../types";
 import { Item } from './Item';
-import { Button } from '../../ui/Button';
+import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { routeUrls } from '../../config/routes';

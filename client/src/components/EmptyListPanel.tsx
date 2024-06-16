@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { Card } from './Card';
+import { Button } from './Button';
 
 const title = "Your shopping list is empty :(";
 const buttonText = "Add your first item";
