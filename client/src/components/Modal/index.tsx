@@ -14,11 +14,11 @@ type Props = {
 
 export const Modal: React.FC<Props> = ({ open, onClose }) => {
   function onCancelClick() {
-    onClose({isOpen: false, result: "cancel"});
+    onClose({ isOpen: false, result: "cancel", itemId: undefined });
   }
 
   function onConfirmClick() {
-    onClose({isOpen: false, result: "confirm"})
+    onClose({ isOpen: false, result: "confirm" });
   }
 
   return (

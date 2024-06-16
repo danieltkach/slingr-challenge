@@ -48,10 +48,10 @@ export const Item: React.FC<Props> = ({ item }) => {
   }
 
   useEffect(()=>{
-    if(modalState.result === "confirm" && item.id === modalState.itemId) {
+    if(modalState.result === "confirm" && modalState.isOpen === false && item.id === modalState.itemId) {
       deletingApi.mutate(item);
     }
-  }, [modalState, item.id])
+  }, [modalState.result, item.id]);
   
   return (
     <Card>
