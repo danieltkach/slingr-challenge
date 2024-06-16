@@ -9,8 +9,7 @@ Styled with Material-UI and styled-components.
 State management with Zustand and TanStack React Query.
 
 ## Features
-It allows you to create items that contain a name, description and an amount. The amount is not displayed in the list itself as per design. 
-NOTE: functionally we could make it so that several items are added at once instead of including a quantity for each. I've decided for the latter.
+It allows you to create items that contain a name, description and an amount. I've decided to use the property "amount/quantity" insted of adding several repeated items at once to the list, though I would have cleared-up requirement with the team in a real life scenario.
 
 
 ## Folder Structure
