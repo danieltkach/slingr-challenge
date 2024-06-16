@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ListItem } from "../../types";
 import { Checkbox, Typography } from '@mui/material';
@@ -12,6 +12,7 @@ import { API_URL } from '../../config/env';
 import { shoppingListQueryKey } from '../../state/queryKeys';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../../main';
+import { Modal } from '../../components/Modal';
 
 type Props = {
   item: ListItem;
@@ -21,6 +22,7 @@ export const Item: React.FC<Props> = ({ item }) => {
   const { name, description, active } = item;
   const { setListItem, resetListItem } = useListItemStore();
   const navigateTo = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   function onEditClick() {
     setListItem(item);
@@ -42,26 +44,35 @@ export const Item: React.FC<Props> = ({ item }) => {
   });
 
   function onDeleteClick() {
-    // setModalOpen()
-    deletingApi.mutate(item);
+    setModalOpen(true);
   }
 
+  function closeModal (confirmed: boolean) {
+    setModalOpen(false);
+    if (confirmed) {
+      deletingApi.mutate(item);
+    }
+  };
+
   return (
-    <Card>
-      <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!active} />
-      <Text>
-        <Typography variant="h3" sx={{
-          textDecoration: active ? 'none' : 'line-through',
-        }}>{name}</Typography>
-        <Typography variant="h4" sx={{
-          textDecoration: active ? 'none' : 'line-through',
-        }}>{description}</Typography>
-      </Text>
-      <Icons>
-        <ModeEditOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onEditClick()} />
-        <DeleteOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onDeleteClick()} />
-      </Icons>
-    </Card>
+    <>
+      <Modal open={modalOpen} onClose={closeModal} />
+      <Card>
+        <Checkbox sx={{ marginLeft: '1rem', marginRight: '1rem' }} checked={!active} />
+        <Text>
+          <Typography variant="h3" sx={{
+            textDecoration: active ? 'none' : 'line-through',
+          }}>{name}</Typography>
+          <Typography variant="h4" sx={{
+            textDecoration: active ? 'none' : 'line-through',
+          }}>{description}</Typography>
+        </Text>
+        <Icons>
+          <ModeEditOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onEditClick()} />
+          <DeleteOutlineOutlinedIcon sx={{ cursor: 'pointer' }} onClick={() => onDeleteClick()} />
+        </Icons>
+      </Card>
+    </>
   );
 };
 

@@ -8,18 +8,22 @@ import { Button } from '../ui/Button';
 
 type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: (confirmed: boolean) => void;
 };
 
-export const Modal: React.FC<Props> = ({ open, setOpen }) => {
-  const handleClose = () => {
-    setOpen(false);
-  };
+export const Modal: React.FC<Props> = ({ open, onClose }) => {
+  function onCancelClick() {
+    onClose(false);
+  }
+
+  function onConfirmClick() {
+    onClose(true)
+  }
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={()=>onClose(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -32,8 +36,8 @@ export const Modal: React.FC<Props> = ({ open, setOpen }) => {
         </DialogContentText>
       </DialogContent>
       <Actions>
-        <Button text={"Cancel"} onClick={handleClose} sx={{ marginRight: '1rem' }} />
-        <Button variant={"contained"} text={"Delete"} onClick={handleClose} />
+        <Button text={"Cancel"} onClick={onCancelClick} sx={{ marginRight: '1rem' }} />
+        <Button variant={"contained"} text={"Delete"} onClick={onConfirmClick} />
       </Actions>
     </Dialog>
   );
