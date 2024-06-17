@@ -103,7 +103,8 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   border: 0.5px solid #D5DFE9;
-  width: 64rem;
+  width: 100%;
+  max-width: 64rem;
   min-height: 5.4rem;
   border-radius: 4px;
 `;

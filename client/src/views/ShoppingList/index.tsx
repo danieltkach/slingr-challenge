@@ -40,24 +40,28 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 64rem;
   height: 100%;
+  max-width: 64rem;
   max-height: calc(100vh - 64px);
   padding-top: 2rem;
-`;
+  `;
 
 const ItemsContainer = styled.div`
   overflow-y: auto;
   height: 100%;
+  width: 100%;
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 0;
   gap: 1rem;
-`;
+  `;
 
 const ActionsPanel = styled.div`
   display: flex;
+  max-width: 64rem;
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
