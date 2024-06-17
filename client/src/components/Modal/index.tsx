@@ -5,35 +5,32 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '../Button';
-import { ModalState } from '../Modal/modalStore';
+import { useModalStore } from '../Modal/modalStore';
 
-type Props = {
-  open: boolean;
-  onClose: (state: ModalState) => void;
-};
+export const Modal: React.FC = () => {
+  const { state: {isOpen, title, message}, setState } = useModalStore();
 
-export const Modal: React.FC<Props> = ({ open, onClose }) => {
   function onCancelClick() {
-    onClose({ isOpen: false, result: "cancel", itemId: undefined });
+    setState({ isOpen: false, result: "cancel", itemId: undefined, title: "", message: "" });
   }
 
   function onConfirmClick() {
-    onClose({ isOpen: false, result: "confirm" });
+    setState({ isOpen: false, result: "confirm", title: "", message: "" });
   }
 
   return (
     <Dialog
-      open={open}
+      open={isOpen}
       onClose={onCancelClick}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {"Delete item?"}
+        {title}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this item? This can not be undone.
+          {message}
         </DialogContentText>
       </DialogContent>
       <Actions>

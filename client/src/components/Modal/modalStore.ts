@@ -6,6 +6,8 @@ export type ModalState = {
   isOpen: boolean,
   result?: ModalResult;
   itemId?: string;
+  title: string;
+  message: string;
 };
 
 interface ModalStore {
@@ -13,7 +15,7 @@ interface ModalStore {
   setState: (state: ModalState) => void;
 }
 
-const initialState = { isOpen: false, result: "cancel" as ModalResult, itemId: undefined };
+const initialState: ModalState = { isOpen: false, result: "cancel" as ModalResult, itemId: undefined, title: "", message: "" };
 
 export const useModalStore = create<ModalStore>((set) => ({
   state: initialState,

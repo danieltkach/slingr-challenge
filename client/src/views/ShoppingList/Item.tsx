@@ -18,6 +18,11 @@ type Props = {
   item: ListItem;
 };
 
+const modal = {
+  title: "Delete item?",
+  message: "Are you sure you want to delete this item? This cannot be undone."
+}
+
 export const Item: React.FC<Props> = ({ item }) => {
   const { name, description, active: initialActive } = item;
   const [isActive, setIsActive] = useState(initialActive);
@@ -61,7 +66,7 @@ export const Item: React.FC<Props> = ({ item }) => {
   }, [initialActive]);
 
   function onDeleteClick() {
-    setModalState({isOpen: true, itemId: item.id});
+    setModalState({isOpen: true, itemId: item.id, title: modal.title, message: modal.message});
   }
 
   function onToggleClick() {
