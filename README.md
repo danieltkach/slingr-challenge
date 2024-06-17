@@ -9,8 +9,8 @@ Styled with Material-UI and styled-components.
 State management with Zustand and TanStack React Query.
 
 ## Features
-It allows you to create items that contain a name, description and an amount. The amount is not displayed in the list itself as per design. 
-NOTE: functionally we could make it so that several items are added at once instead of including a quantity for each. I've decided for the latter.
+It allows you to create items that contain a name, description and an amount. You can edit any key of the item, mark them "purchased/completed" as well as delete them. I've decided to map the property "amount/quantity" to the data model instead of adding several repeated items at once to the list, and also did not repeat the main navbar in the "adding/editing" window, though I would have cleared-up requirements with the team in a real life scenario. 
+I've added simple validations such as not allowing the user to create an item with blank name or description, displaying a toast when attempted. 
 
 
 ## Folder Structure
@@ -70,8 +70,7 @@ NOTE: functionally we could make it so that several items are added at once inst
 
 ### Prerequisites
 
-- Node.js and npm installed (version > 18.4)
-- MongoDB instance (local or cloud)
+- Node.js and npm installed (LTS version > 18.14)
 
 ### Installation
 
@@ -97,3 +96,15 @@ npm i
 npm run dev
 ```
 Feel free to contact me if you have any questions. I'm available at danieltkach@gmail.com
+
+## Screenshots
+![image](https://github.com/danieltkach/slingr-challenge/assets/70539591/8d0008f3-0f2b-4046-a55f-a0fe9e0f94db)
+
+![image](https://github.com/danieltkach/slingr-challenge/assets/70539591/8f9b6eae-fffb-4094-a5c3-45b175b3e33d)
+
+![image](https://github.com/danieltkach/slingr-challenge/assets/70539591/31bd53df-3d6e-4660-b05c-a9bac1ef5423)
+
+![image](https://github.com/danieltkach/slingr-challenge/assets/70539591/2de78b75-3fd1-463b-8ebb-3ab406ddf67d)
+
+
+
