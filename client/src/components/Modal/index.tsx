@@ -8,7 +8,7 @@ import { Button } from '../Button';
 import { useModalStore } from '../Modal/modalStore';
 
 export const Modal: React.FC = () => {
-  const { state: {isOpen, title, message}, setState } = useModalStore();
+  const { state: { isOpen, title, message }, setState } = useModalStore();
 
   function onCancelClick() {
     setState({ isOpen: false, result: "cancel", itemId: undefined, title: "", message: "" });
@@ -28,7 +28,10 @@ export const Modal: React.FC = () => {
       <DialogTitle id="alert-dialog-title">
         {title}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        sx={{ width: '26rem', maxHeight: '17rem' }}
+
+      >
         <DialogContentText id="alert-dialog-description">
           {message}
         </DialogContentText>
