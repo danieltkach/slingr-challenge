@@ -86,7 +86,7 @@ Note: You must run the api and client in two separate terminal instances.
 ```sh
 cd api
 npm i
-npm start
+npm run prod
 ```
 
 3. **Frontend setup**:
