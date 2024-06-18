@@ -120,8 +120,8 @@ const StyledCard = styled(MUICard)`
   padding: 1.2rem;
   padding-top: 3rem;
   flex-direction: column;
-  width: 35rem;
-  height: 48rem;
+  width: 32rem;
+  height: 40rem;
   border: 1px solid #D5DFE9;
   border-bottom: 6px solid #4D81B7;
   box-shadow: 0px 0px 14px 0px #00000040;

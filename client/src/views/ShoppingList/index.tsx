@@ -65,4 +65,5 @@ const ActionsPanel = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
+  padding-bottom: 1.2rem;
 `;

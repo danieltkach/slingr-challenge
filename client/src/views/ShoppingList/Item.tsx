@@ -105,7 +105,7 @@ const Card = styled.div`
   border: 0.5px solid #D5DFE9;
   width: 100%;
   max-width: 64rem;
-  min-height: 5.4rem;
+  min-height: 5.2rem;
   border-radius: 4px;
 `;
 
