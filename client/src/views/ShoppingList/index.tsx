@@ -51,7 +51,6 @@ const ItemsContainer = styled.div`
   overflow-y: auto;
   height: 100%;
   width: 100%;
-  justify-content: center;
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
