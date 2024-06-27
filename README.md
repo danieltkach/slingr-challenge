@@ -2,6 +2,9 @@
 
 This repository contains a full-stack shopping list application. The backend is built with Node.js and Express, connected to a MongoDB database hosted on the cloud. The frontend is developed using React and TypeScript, templated with Vite.
 
+![Veritone - Slingr Challenge drawio](https://github.com/danieltkach/slingr-challenge/assets/70539591/fb2490b0-31eb-478d-b6c6-392bcfd2d7ef)
+
+
 ## Styling
 Styled with Material-UI and styled-components.
 
